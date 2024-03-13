@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1.4
 #FROM --platform=$BUILDPLATFORM maven:3.8.5-eclipse-temurin-17 AS builder
-FROM --platform=$BUILDPLATFORM maven:3.8.5-eclipse-temurin-17 AS builder
 FROM --platform=$BUILDPLATFORM maven:3.9.6-eclipse-temurin-21-alpine AS build
 LABEL authors="hendisantika"
 WORKDIR /workdir/server
@@ -30,7 +29,8 @@ RUN mkdir -p target/dependency
 WORKDIR /workdir/server/target/dependency
 RUN jar -xf ../*.jar
 
-FROM eclipse-temurin:17-jre-focal
+#FROM eclipse-temurin:17-jre-focal
+FROM eclipse-temurin:21-alpine
 
 EXPOSE 8080
 VOLUME /tmp
