@@ -28,4 +28,7 @@ public class Greeting {
     private int id;
     private String name;
 
+    public Greeting(String name) {
+        this.name = name;
+    }
 }

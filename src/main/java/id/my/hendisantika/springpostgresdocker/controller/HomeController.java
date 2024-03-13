@@ -1,8 +1,11 @@
 package id.my.hendisantika.springpostgresdocker.controller;
 
+import id.my.hendisantika.springpostgresdocker.entity.Greeting;
 import id.my.hendisantika.springpostgresdocker.repository.GreetingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,4 +22,11 @@ import org.springframework.stereotype.Controller;
 public class HomeController {
 
     private final GreetingRepository greetingRepository;
+
+    @GetMapping("/")
+    public String showHome(String name, Model model) {
+        Greeting dockerGreeting = greetingRepository.findById(1).orElse(new Greeting("Not Found 😕"));
+        model = model.addAttribute("name", dockerGreeting.getName());
+        return "home";
+    }
 }
