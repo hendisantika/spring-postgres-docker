@@ -57,6 +57,60 @@ user profile management with REST APIs and uses modern development practices.
 - **Delete User Profile**
     - DELETE `/api/user-profiles/{id}`
 
+## Curl Examples
+
+### Create a User Profile
+
+```bash
+curl -X POST http://localhost:8080/api/user-profiles \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "birthDate": "1990-01-01",
+    "sex": 1
+  }'
+```
+
+### Get All User Profiles
+
+```bash
+curl -X GET http://localhost:8080/api/user-profiles
+```
+
+### Get User Profile by ID
+
+```bash
+curl -X GET http://localhost:8080/api/user-profiles/123e4567-e89b-12d3-a456-426614174000
+```
+
+Note: Replace the UUID with an actual user profile ID.
+
+### Update User Profile
+
+```bash
+curl -X PUT http://localhost:8080/api/user-profiles/123e4567-e89b-12d3-a456-426614174000 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@example.com",
+    "birthDate": "1990-01-01",
+    "sex": 1
+  }'
+```
+
+Note: Replace the UUID with an actual user profile ID.
+
+### Delete User Profile
+
+```bash
+curl -X DELETE http://localhost:8080/api/user-profiles/123e4567-e89b-12d3-a456-426614174000
+```
+
+Note: Replace the UUID with an actual user profile ID.
+
 ## Database Configuration
 
 The PostgreSQL database is configured with the following default settings:
