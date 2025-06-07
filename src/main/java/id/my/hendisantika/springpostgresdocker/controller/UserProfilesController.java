@@ -3,11 +3,13 @@ package id.my.hendisantika.springpostgresdocker.controller;
 import id.my.hendisantika.springpostgresdocker.entity.UserProfiles;
 import id.my.hendisantika.springpostgresdocker.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,5 +34,10 @@ public class UserProfilesController {
     public UserProfiles createUserProfile(@RequestBody UserProfiles userProfile) {
         userProfile.setCreateBy(UUID.randomUUID());
         return userProfileService.createUserProfile(userProfile);
+    }
+
+    @GetMapping
+    public List<UserProfiles> getAllUserProfiles() {
+        return userProfileService.getAllUserProfiles();
     }
 }
