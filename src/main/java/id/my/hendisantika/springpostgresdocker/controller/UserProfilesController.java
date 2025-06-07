@@ -1,9 +1,12 @@
 package id.my.hendisantika.springpostgresdocker.controller;
 
 import id.my.hendisantika.springpostgresdocker.entity.UserProfiles;
+import id.my.hendisantika.springpostgresdocker.exception.ResourceNotFoundException;
 import id.my.hendisantika.springpostgresdocker.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +42,12 @@ public class UserProfilesController {
     @GetMapping
     public List<UserProfiles> getAllUserProfiles() {
         return userProfileService.getAllUserProfiles();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserProfiles> getUserProfileById(@PathVariable UUID id) {
+        UserProfiles userProfile = userProfileService.getUserProfileById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User profile not found"));
+        return ResponseEntity.ok(userProfile);
     }
 }
