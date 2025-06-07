@@ -17,6 +17,8 @@ target/
 *.iws
 *.iml
 *.ipr
+data
+pgadmin_data
 
 ### NetBeans ###
 /nbproject/private/

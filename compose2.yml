@@ -1,16 +1,12 @@
 services:
   backend:
-    build:
-      context: backend
-      target: dev-envs
+    build: .
     ports:
-      - "9000:9000"
+      - 9000:9000
     environment:
       - POSTGRES_DB=example
     networks:
       - spring-postgres
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres
     restart: always
@@ -24,7 +20,7 @@ services:
       - POSTGRES_DB=example
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
     expose:
-      - 5433
+      - 5432
 volumes:
   db-data:
 secrets:
