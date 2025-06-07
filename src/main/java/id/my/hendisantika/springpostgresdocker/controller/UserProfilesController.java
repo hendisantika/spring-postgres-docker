@@ -1,9 +1,14 @@
 package id.my.hendisantika.springpostgresdocker.controller;
 
+import id.my.hendisantika.springpostgresdocker.entity.UserProfiles;
 import id.my.hendisantika.springpostgresdocker.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,4 +28,9 @@ public class UserProfilesController {
 
     private final UserProfileService userProfileService;
 
+    @PostMapping
+    public UserProfiles createUserProfile(@RequestBody UserProfiles userProfile) {
+        userProfile.setCreateBy(UUID.randomUUID());
+        return userProfileService.createUserProfile(userProfile);
+    }
 }
