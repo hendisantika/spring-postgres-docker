@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,4 +34,7 @@ public class UserProfileService {
         return userProfileRepository.findAll();
     }
 
+    public Optional<UserProfiles> getUserProfileById(UUID id) {
+        return userProfileRepository.findById(id);
+    }
 }
