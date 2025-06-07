@@ -5,6 +5,8 @@ import id.my.hendisantika.springpostgresdocker.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-postgres-docker
@@ -25,4 +27,9 @@ public class UserProfileService {
     public UserProfiles createUserProfile(UserProfiles userProfilesEntity) {
         return userProfileRepository.save(userProfilesEntity);
     }
+
+    public List<UserProfiles> getAllUserProfiles() {
+        return userProfileRepository.findAll();
+    }
+
 }
