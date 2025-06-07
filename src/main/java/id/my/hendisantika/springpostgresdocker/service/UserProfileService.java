@@ -1,5 +1,6 @@
 package id.my.hendisantika.springpostgresdocker.service;
 
+import id.my.hendisantika.springpostgresdocker.entity.UserProfiles;
 import id.my.hendisantika.springpostgresdocker.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,7 @@ public class UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
 
+    public UserProfiles createUserProfile(UserProfiles userProfilesEntity) {
+        return userProfileRepository.save(userProfilesEntity);
+    }
 }
