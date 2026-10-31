@@ -1,22 +1,26 @@
 # Spring Boot PostgreSQL Docker Example
 
+[![Java CI with Maven](https://github.com/hendisantika/spring-postgres-docker/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-postgres-docker/actions/workflows/maven.yml)
+![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-6DB33F?logo=springboot)
+
 This project demonstrates a Spring Boot application with PostgreSQL database running in Docker containers. It includes
 user profile management with REST APIs and uses modern development practices.
 
 ## Technologies Used
 
-- Java 21
-- Spring Boot 3.5.0
+- Java 25 (LTS)
+- Spring Boot 4.1.1
 - PostgreSQL 17.5
 - Docker & Docker Compose
-- Maven 3.9.9
-- Spring Data JPA
+- Maven 3.9.12 (via the included `mvnw` wrapper)
+- Spring Data JPA & Spring Data JDBC
 - Lombok
-- Testcontainers (for integration testing)
+- Testcontainers 2.x (for integration testing)
 
 ## Prerequisites
 
-- Java 21 or higher
+- Java 25 or higher (e.g. [Eclipse Temurin 25](https://adoptium.net/))
 - Docker and Docker Compose
 - Maven (or use included mvnw wrapper)
 
@@ -30,7 +34,7 @@ user profile management with REST APIs and uses modern development practices.
 
 2. Start the application with Docker Compose:
    ```bash
-   mvn clean spring-boot:run
+   ./mvnw clean spring-boot:run
    ```
 
 3. The application will be available at: `http://localhost:8080`
@@ -123,11 +127,45 @@ The PostgreSQL database is configured with the following default settings:
 
 ## Running Tests
 
-The project includes integration tests using Testcontainers:
+The project includes integration tests using Testcontainers (Docker must be running):
 
 ```bash
-./mvnw clean test
+./mvnw clean verify
 ```
+
+> **Note (JDK 23+):** annotation processors are no longer discovered implicitly, so Lombok and the
+> Spring Boot configuration processor are declared under `annotationProcessorPaths` of the
+> `maven-compiler-plugin` in `pom.xml`.
+
+## Building the Docker Image
+
+The multi-stage `Dockerfile` builds with `maven:3.9.12-eclipse-temurin-25` and runs on
+`eclipse-temurin:25-jre-alpine`:
+
+```bash
+docker build -t spring-postgres-docker .
+docker run --rm -p 8080:8080 spring-postgres-docker
+```
+
+## Continuous Integration
+
+GitHub Actions ([`.github/workflows/maven.yml`](.github/workflows/maven.yml)) runs `./mvnw -B verify` on
+Temurin JDK 25 for every push and pull request to `main` (and on manual dispatch). On pushes to `main` the
+Maven dependency graph is submitted to GitHub to improve Dependabot alerts.
+
+## Dependency Updates
+
+[Dependabot](.github/dependabot.yml) keeps dependencies up to date:
+
+| Ecosystem        | Schedule              | Notes                                                                 |
+|------------------|-----------------------|-----------------------------------------------------------------------|
+| Maven            | Daily 05:00 (WIB)     | Grouped: Spring, Testcontainers, Maven plugins, other minor/patch     |
+| GitHub Actions   | Weekly, Monday        | All actions grouped into a single PR                                  |
+| Docker           | Weekly, Monday        | Base images in `Dockerfile` (Maven 4 pre-releases ignored)            |
+| Docker Compose   | Weekly, Monday        | Images in `compose.yml`                                               |
+
+PRs use conventional commit prefixes (`build(deps)`, `ci(deps)`, `build(docker)`, `build(compose)`) and are
+labelled per ecosystem.
 
 ## Features
 
@@ -149,9 +187,13 @@ The project includes integration tests using Testcontainers:
 │   │   └── resources/    # Application properties and SQL scripts
 │   └── test/
 │       └── java/         # Test files
+├── .github/
+│   ├── workflows/maven.yml  # CI build on JDK 25
+│   └── dependabot.yml       # Dependency update configuration
+├── .mvn/                 # Maven wrapper & JVM config
 ├── compose.yml           # Docker Compose configuration
 ├── Dockerfile            # Docker configuration
-└── pom.xml              # Maven configuration
+└── pom.xml               # Maven configuration
 ```
 
 ## Contributing
