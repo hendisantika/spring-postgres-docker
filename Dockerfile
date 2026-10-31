@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM --platform=$BUILDPLATFORM maven:3.9.12-eclipse-temurin-25 AS builder
+FROM --platform=$BUILDPLATFORM maven:3.9-eclipse-temurin-26 AS builder
 LABEL authors="hendisantika"
 WORKDIR /workdir/server
 COPY pom.xml /workdir/server/pom.xml
